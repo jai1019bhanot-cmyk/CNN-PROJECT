@@ -1,4 +1,3 @@
-
 import streamlit as st
 import numpy as np
 from PIL import Image, ImageFilter, ImageStat
@@ -41,7 +40,9 @@ st.markdown("""
 # Load model
 @st.cache_resource
 def load_model():
-    with open("model/cart_detector_model.pkl", "rb") as f:
+    # FIXED: Use __file__ to find model path on Streamlit Cloud
+    model_path = os.path.join(os.path.dirname(__file__), "model", "cart_detector_model.pkl")
+    with open(model_path, "rb") as f:
         return pickle.load(f)
 
 def extract_features(image, size=(128, 128)):
